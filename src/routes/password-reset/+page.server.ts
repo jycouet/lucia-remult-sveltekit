@@ -1,9 +1,10 @@
-import { auth } from '$lib/server/lucia';
-import { fail } from '@sveltejs/kit';
-import { db } from '$lib/server/db';
-import { generatePasswordResetToken } from '$lib/server/token';
 import { isValidEmail, sendPasswordResetLink } from '$lib/server/email';
+import { auth } from '$lib/server/lucia';
+import { generatePasswordResetToken } from '$lib/server/token';
+import { fail } from '@sveltejs/kit';
 
+import { remult } from 'remult';
+import { User } from '../../shared/User';
 import type { Actions } from './$types';
 
 export const actions: Actions = {
@@ -17,11 +18,8 @@ export const actions: Actions = {
 			});
 		}
 		try {
-			const storedUser = await db
-				.selectFrom('user')
-				.selectAll()
-				.where('email', '=', email)
-				.executeTakeFirst();
+			const repo = remult.repo(User);
+			const storedUser = await repo.findFirst({ email: email });
 			if (!storedUser) {
 				return fail(400, {
 					message: 'User does not exist'

@@ -1,6 +1,5 @@
 import { auth } from '$lib/server/lucia';
 import { fail, redirect } from '@sveltejs/kit';
-import { SqliteError } from 'better-sqlite3';
 import { generateEmailVerificationToken } from '$lib/server/token';
 import { isValidEmail, sendEmailVerificationLink } from '$lib/server/email';
 
@@ -52,11 +51,11 @@ export const actions: Actions = {
 			await sendEmailVerificationLink(token);
 		} catch (e) {
 			// check for unique constraint error in user table
-			if (e instanceof SqliteError && e.code === 'SQLITE_CONSTRAINT_UNIQUE') {
-				return fail(400, {
-					message: 'Account already exists'
-				});
-			}
+			// if (e instanceof SqliteError && e.code === 'SQLITE_CONSTRAINT_UNIQUE') {
+			// 	return fail(400, {
+			// 		message: 'Account already exists'
+			// 	});
+			// }
 			console.log(`e`, e);
 
 			return fail(500, {

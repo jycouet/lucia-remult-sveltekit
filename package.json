@@ -13,17 +13,13 @@
 		"format": "prettier --plugin-search-dir . --write ."
 	},
 	"dependencies": {
-		"@lucia-auth/adapter-postgresql": "^2.0.1",
 		"@types/pg": "^8.10.2",
-		"better-sqlite3": "^8.4.0",
-		"kysely": "^0.25.0",
 		"lucia": "latest",
 		"pg": "^8.11.3"
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^2.0.0",
 		"@sveltejs/kit": "^1.20.4",
-		"@types/better-sqlite3": "^7.6.3",
 		"@typescript-eslint/eslint-plugin": "^5.45.0",
 		"@typescript-eslint/parser": "^5.45.0",
 		"eslint": "^8.28.0",
@@ -31,6 +27,7 @@
 		"eslint-plugin-svelte": "^2.30.0",
 		"prettier": "^2.8.0",
 		"prettier-plugin-svelte": "^2.10.1",
+		"remult": "0.22.7-exp.1",
 		"svelte": "^4.0.0",
 		"svelte-check": "^3.4.3",
 		"tslib": "^2.4.1",
