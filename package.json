@@ -13,10 +13,12 @@
 		"format": "prettier --plugin-search-dir . --write ."
 	},
 	"dependencies": {
-		"@lucia-auth/adapter-sqlite": "latest",
+		"@lucia-auth/adapter-postgresql": "^2.0.1",
+		"@types/pg": "^8.10.2",
 		"better-sqlite3": "^8.4.0",
 		"kysely": "^0.25.0",
-		"lucia": "latest"
+		"lucia": "latest",
+		"pg": "^8.11.3"
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^2.0.0",

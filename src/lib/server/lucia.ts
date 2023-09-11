@@ -1,15 +1,18 @@
 import { lucia } from 'lucia';
-import { betterSqlite3 } from '@lucia-auth/adapter-sqlite';
 import { sveltekit } from 'lucia/middleware';
 import { dev } from '$app/environment';
+import { pg } from '@lucia-auth/adapter-postgresql';
+import postgres from 'pg';
 
-import { sqliteDatabase } from './db';
+const pool = new postgres.Pool({
+	connectionString: 'postgres://postgres:example@127.0.0.1:5433/lucia-demo'
+});
 
 export const auth = lucia({
-	adapter: betterSqlite3(sqliteDatabase, {
-		user: 'user',
-		session: 'user_session',
-		key: 'user_key'
+	adapter: pg(pool, {
+		user: 'auth_user',
+		key: 'user_key',
+		session: 'user_session'
 	}),
 	middleware: sveltekit(),
 	env: dev ? 'DEV' : 'PROD',

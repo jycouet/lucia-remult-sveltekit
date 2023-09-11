@@ -57,6 +57,8 @@ export const actions: Actions = {
 					message: 'Account already exists'
 				});
 			}
+			console.log(`e`, e);
+
 			return fail(500, {
 				message: 'An unknown error occurred'
 			});
