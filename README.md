@@ -17,3 +17,9 @@ pnpm dev
 | `id`             | `string`                |        |
 | `email`          | `string`                |   ✓    |
 | `email_verified` | `number` (as `boolean`) |   ✓    |
+
+<!-- TODO roles -->
+<!-- TODO user_id -->
+<!-- TODO Check with prisma cadb -->
+<!-- TODO Check with another app (PWA) -->
+<!-- TODO GUIDE -->
