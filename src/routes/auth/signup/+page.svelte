@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
+	import { AUTH_ROUTES } from '../AUTH_ROUTES';
 
 	import type { ActionData } from './$types';
 
@@ -9,12 +10,12 @@
 <h1>Sign up</h1>
 <form method="post" use:enhance>
 	<label for="email">Email</label>
-	<input name="email" id="email" /><br>
-	<label for="password">Password</label>
+	<input name="email" id="email" /><br />
+	<label for="password">Password <i>(no double typing)</i></label>
 	<input type="password" name="password" id="password" /><br />
 	<input type="submit" />
 </form>
 {#if form?.message}
-<p class="error">{form.message}</p>
+	<p class="error">{form.message}</p>
 {/if}
-<a href="/login">Sign in</a>
+<a href={AUTH_ROUTES.login()}>Login</a>

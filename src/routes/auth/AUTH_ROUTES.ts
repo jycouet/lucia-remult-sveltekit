@@ -4,8 +4,10 @@ export const AUTH_ROUTES = {
 		`${AUTH_ROUTES.base()}/login?redirect=${obj?.redirect ?? '/app'}` +
 		`${obj?.email ? `&email=${obj?.email}` : ''}` +
 		`${obj?.focus ? `&focus=${obj?.focus}` : ''}`,
-	logout: () => `${AUTH_ROUTES.base()}?/logout`
-	// ask_reset_password: (email?: string) =>
-	// 	`${AUTH_ROUTES.base()}/ask-reset-password${email ? `?email=${email}` : ''}`,
+	logout: () => `${AUTH_ROUTES.base()}?/logout`,
+	signup: () => `${AUTH_ROUTES.base()}/signup`,
+	password_reset: (email?: string) =>
+		`${AUTH_ROUTES.base()}/password-reset${email ? `?email=${email}` : ''}`,
+	email_verification: () => `${AUTH_ROUTES.base()}/email-verification`
 	// set_password: (token: string) => `${AUTH_ROUTES.base()}/set-password?token=${token}`
 };

@@ -8,7 +8,7 @@ export const load: LayoutServerLoad = async ({ locals, url }) => {
 
 	if (!session) throw redirect(302, AUTH_ROUTES.login({ redirect: url.pathname }));
 	if (!session.user.emailVerified) {
-		throw redirect(302, '/email-verification');
+		throw redirect(302, AUTH_ROUTES.email_verification());
 	}
 	return {
 		userId: session.user.userId,

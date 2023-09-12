@@ -1,11 +1,14 @@
+import { AUTH_ROUTES } from '../../routes/auth/AUTH_ROUTES';
+
 export const sendEmailVerificationLink = async (token: string) => {
-	const url = `http://localhost:5173/email-verification/${token}`;
-	console.log(`Your email verification link: ${url}`);
+	// TODO ORIGIN
+	const url = `http://localhost:5173${AUTH_ROUTES.email_verification()}/${token}`;
+	console.log(`📨 Your email verification link: ${url}`);
 };
 
 export const sendPasswordResetLink = async (token: string) => {
-	const url = `http://localhost:5173/password-reset/${token}`;
-	console.log(`Your password reset link: ${url}`);
+	const url = `http://localhost:5173${AUTH_ROUTES.password_reset()}/${token}`;
+	console.log(`📨 Your password reset link: ${url}`);
 };
 
 export const isValidEmail = (maybeEmail: unknown): maybeEmail is string => {

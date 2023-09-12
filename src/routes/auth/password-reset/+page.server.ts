@@ -4,7 +4,7 @@ import { generatePasswordResetToken } from '$lib/server/token';
 import { fail } from '@sveltejs/kit';
 
 import { remult } from 'remult';
-import { User } from '../../shared/User';
+import { User } from '../../../shared/User';
 import type { Actions } from './$types';
 
 export const actions: Actions = {

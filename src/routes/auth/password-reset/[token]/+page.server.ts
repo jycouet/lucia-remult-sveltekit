@@ -3,12 +3,13 @@ import { fail, redirect } from '@sveltejs/kit';
 import { isValidPasswordResetToken, validatePasswordResetToken } from '$lib/server/token';
 
 import type { PageServerLoad, Actions } from './$types';
+import { AUTH_ROUTES } from '../../AUTH_ROUTES';
 
 export const load: PageServerLoad = async ({ params }) => {
 	const { token } = params;
 	const validToken = await isValidPasswordResetToken(token);
 	if (!validToken) {
-		throw redirect(302, '/password-reset');
+		throw redirect(302, AUTH_ROUTES.password_reset());
 	}
 	return {};
 };
