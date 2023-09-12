@@ -28,7 +28,12 @@ export const remultApi = remultSveltekit({
 	initRequest: async (request, options) => {
 		const session = await request.locals.auth.validate();
 		if (session?.user) {
-			remult.user = { id: session?.user.userId, name: session?.user.email };
+			remult.user = {
+				id: session?.user.userId,
+				name: session?.user.email,
+				email: session?.user.email,
+				email_verified: session?.user.emailVerified
+			};
 		} else {
 			remult.user = undefined;
 		}

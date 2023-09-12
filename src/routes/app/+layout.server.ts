@@ -1,17 +1,16 @@
 import { redirect } from '@sveltejs/kit';
 import type { LayoutServerLoad } from './$types';
 import { AUTH_ROUTES } from '$auth/AUTH_ROUTES';
+import { remult } from 'remult';
 
 export const load: LayoutServerLoad = async ({ locals, url }) => {
-	// TODO Switch to remult.user!
-	const session = await locals.auth.validate();
+	if (!remult.user) {
+		throw redirect(302, AUTH_ROUTES.login({ redirect: url.pathname }));
+	}
 
-	if (!session) throw redirect(302, AUTH_ROUTES.login({ redirect: url.pathname }));
-	if (!session.user.emailVerified) {
+	if (!remult.user.email_verified) {
 		throw redirect(302, AUTH_ROUTES.email_verification());
 	}
-	return {
-		userId: session.user.userId,
-		email: session.user.email
-	};
+
+	return { user: remult.user };
 };

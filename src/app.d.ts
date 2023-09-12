@@ -20,4 +20,11 @@ declare global {
 	}
 }
 
+declare module 'remult' {
+	export interface UserInfo {
+		email: string;
+		email_verified: boolean;
+	}
+}
+
 export {};
