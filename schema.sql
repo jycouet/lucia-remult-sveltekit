@@ -1,33 +1,35 @@
-CREATE TABLE public.user(
-    id varchar(15) PRIMARY KEY,
-    email varchar(31) NOT NULL UNIQUE,
-    email_verified integer NOT NULL
+CREATE TABLE auth_user(
+    id varchar NOT NULL PRIMARY KEY,
+    email varchar NOT NULL,
+    email_verified boolean DEFAULT FALSE NOT NULL
 );
 
-CREATE TABLE user_key(
-    id varchar(255) PRIMARY KEY,
-    user_id varchar(15) NOT NULL,
-    hashed_password varchar(255),
-    FOREIGN KEY (user_id) REFERENCES public.user(id)
+CREATE TABLE auth_user_key(
+    id varchar NOT NULL PRIMARY KEY,
+    user_id varchar NOT NULL,
+    hashed_password varchar NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES auth_user(id)
 );
 
-CREATE TABLE user_session(
-    id varchar(127) PRIMARY KEY,
-    user_id varchar(15) NOT NULL,
+CREATE TABLE auth_user_session(
+    id varchar NOT NULL PRIMARY KEY,
+    user_id varchar NOT NULL,
     active_expires bigint NOT NULL,
     idle_expires bigint NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES public.user(id)
+    username varchar DEFAULT '' NOT NULL,
+    roles varchar DEFAULT '' NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES auth_user(id)
 );
 
-CREATE TABLE email_verification_token(
-    id varchar(63) PRIMARY KEY,
-    user_id varchar(15) NOT NULL,
+CREATE TABLE auth_email_verification_token(
+    id varchar NOT NULL PRIMARY KEY,
+    user_id varchar NOT NULL,
     expires bigint NOT NULL
 );
 
-CREATE TABLE password_reset_token(
-    id varchar(63) PRIMARY KEY,
-    user_id varchar(15) NOT NULL,
+CREATE TABLE auth_password_reset_token(
+    id varchar NOT NULL PRIMARY KEY,
+    user_id varchar NOT NULL,
     expires bigint NOT NULL
 );
 

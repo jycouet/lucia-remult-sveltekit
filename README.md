@@ -10,18 +10,8 @@ pnpm i
 pnpm dev
 ```
 
-## User schema # TODO
+Check schema.sql
 
-| id               | type                    | unique |
-| ---------------- | ----------------------- | :----: |
-| `id`             | `string`                |        |
-| `email`          | `string`                |   ✓    |
-| `email_verified` | `number` (as `boolean`) |   ✓    |
-
-<!-- TODO roles -->
-<!-- TODO user_id -->
-<!-- TODO Check with prisma cadb -->
-<!-- TODO Check with another app (PWA) -->
 <!-- TODO GUIDE
 	1/ alias $auth
 -->

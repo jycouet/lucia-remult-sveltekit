@@ -18,7 +18,7 @@ const handleAuth: Handle = async ({ event, resolve }) => {
 	return await resolve(event);
 };
 
-SqlDatabase.LogToConsole = 'oneLiner';
+// SqlDatabase.LogToConsole = 'oneLiner';
 
 export const remultApi = remultSveltekit({
 	logApiEndPoints: true,
@@ -33,12 +33,16 @@ export const remultApi = remultSveltekit({
 	controllers: [UsersController],
 	initRequest: async (request, options) => {
 		const session = await request.locals.auth.validate();
+
+		console.log(`session`, session);
+
 		if (session?.user) {
 			remult.user = {
 				id: session?.user.userId,
 				name: session?.user.email,
 				email: session?.user.email,
-				email_verified: session?.user.emailVerified
+				email_verified: session?.user.emailVerified,
+				roles: session?.roles
 			};
 		} else {
 			remult.user = undefined;
@@ -46,6 +50,7 @@ export const remultApi = remultSveltekit({
 	},
 	dataProvider: createPostgresConnection({
 		connectionString: 'postgres://postgres:example@127.0.0.1:5433/lucia-demo'
+		// connectionString: 'postgres://postgres:example@127.0.0.1:5433/my-minion-cadb'
 	})
 });
 

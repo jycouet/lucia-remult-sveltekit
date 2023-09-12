@@ -16,4 +16,10 @@ export class AuthUserSession {
 
 	@Fields.number()
 	idle_expires!: number;
+
+	@Fields.string()
+	username!: string;
+
+	@Fields.string()
+	roles!: string;
 }

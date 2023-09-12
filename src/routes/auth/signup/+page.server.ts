@@ -45,7 +45,9 @@ export const actions: Actions = {
 			});
 			const session = await auth.createSession({
 				userId: user.userId,
-				attributes: {}
+				attributes: {
+					roles: ['R1']
+				}
 			});
 			locals.auth.setSession(session); // set session cookie
 			const token = await generateEmailVerificationToken(user.userId);

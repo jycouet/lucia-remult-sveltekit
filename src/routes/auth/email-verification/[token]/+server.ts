@@ -14,7 +14,9 @@ export const GET: RequestHandler = async ({ params, locals }) => {
 		});
 		const session = await auth.createSession({
 			userId: user.userId,
-			attributes: {}
+			attributes: {
+				roles: ['R1']
+			}
 		});
 		locals.auth.setSession(session);
 		return new Response(null, {

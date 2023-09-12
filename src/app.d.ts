@@ -16,7 +16,9 @@ declare global {
 			email: string;
 			email_verified: boolean;
 		};
-		type DatabaseSessionAttributes = Record<string, never>;
+		type DatabaseSessionAttributes = {
+			roles: string[];
+		};
 	}
 }
 

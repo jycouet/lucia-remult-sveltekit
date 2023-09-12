@@ -87,7 +87,11 @@ export const remultAdapter = (): InitializeAdapter<Adapter> => {
 			},
 			setSession: async (session) => {
 				try {
-					await repo_Session.insert(session);
+					const { roles, ...rest } = session;
+					await repo_Session.insert({
+						...rest,
+						roles: (roles ?? []).join(',')
+					});
 				} catch (e) {
 					// TODO
 					const error = e as Partial<PossibleRemultError>;
@@ -118,7 +122,11 @@ export const remultAdapter = (): InitializeAdapter<Adapter> => {
 				}
 			},
 			updateSession: async (userId, partialSession) => {
-				await repo_Session.update(userId, partialSession);
+				const { roles, ...rest } = partialSession;
+				await repo_Session.update(userId, {
+					...rest,
+					roles: (roles ?? []).join(',')
+				});
 			},
 
 			getKey: async (keyId) => {
@@ -184,13 +192,12 @@ export const remultAdapter = (): InitializeAdapter<Adapter> => {
 };
 
 export const transformSession = (sessionData: AuthUserSession): SessionSchema => {
-	const { active_expires, idle_expires, ...data } = sessionData;
-	// TODO
-	// @ts-ignore
 	return {
-		...data,
-		active_expires: Number(active_expires),
-		idle_expires: Number(idle_expires)
+		id: sessionData.id,
+		user_id: sessionData.user_id,
+		active_expires: sessionData.active_expires,
+		idle_expires: sessionData.idle_expires,
+		roles: sessionData.roles ? sessionData.roles.split(',') : []
 	};
 };
 

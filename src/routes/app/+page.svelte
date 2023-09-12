@@ -18,8 +18,7 @@
 
 <p>You are in the <b>private</b> space.</p>
 <h2>Authenticated</h2>
-<p>User id: {remult.user?.id} {remult.user?.id}</p>
-<p>Email: {remult.user?.email}</p>
+<pre>{JSON.stringify(remult.user, null, 2)}</pre>
 
 <Logout />
 

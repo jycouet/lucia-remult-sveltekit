@@ -36,7 +36,9 @@ export const actions: Actions = {
 			const key = await auth.useKey('email', email.toLowerCase(), password);
 			const session = await auth.createSession({
 				userId: key.userId,
-				attributes: {}
+				attributes: {
+					roles: ['R1']
+				}
 			});
 			locals.auth.setSession(session); // set session cookie
 		} catch (e) {

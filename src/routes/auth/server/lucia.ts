@@ -12,6 +12,11 @@ export const auth = lucia({
 			email: data.email,
 			emailVerified: Boolean(data.email_verified)
 		};
+	},
+	getSessionAttributes: (data) => {
+		return {
+			roles: data.roles
+		};
 	}
 });
 
