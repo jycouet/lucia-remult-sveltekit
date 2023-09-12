@@ -1,8 +1,8 @@
 import { auth } from '$lib/server/lucia';
-import { LuciaError } from 'lucia';
 import { fail, redirect } from '@sveltejs/kit';
+import { LuciaError } from 'lucia';
 
-import type { PageServerLoad, Actions } from './$types';
+import type { Actions, PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ locals }) => {
 	const session = await locals.auth.validate();
@@ -14,7 +14,7 @@ export const load: PageServerLoad = async ({ locals }) => {
 };
 
 export const actions: Actions = {
-	default: async ({ request, locals }) => {
+	default: async ({ request, locals, url }) => {
 		const formData = await request.formData();
 		const email = formData.get('email');
 		const password = formData.get('password');
@@ -55,6 +55,6 @@ export const actions: Actions = {
 		}
 		// redirect to profile page
 		// make sure you don't throw inside a try/catch block!
-		throw redirect(302, '/');
+		throw redirect(302, url.searchParams.get('redirect') ?? '/');
 	}
 };

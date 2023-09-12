@@ -1,7 +1,8 @@
 import { Entity, Fields } from 'remult';
 
 @Entity('userSessions', {
-	dbName: 'user_session'
+	dbName: 'user_session',
+	allowApiCrud: false
 })
 export class UserSession {
 	@Fields.string()

@@ -4,25 +4,27 @@
 
 	import type { PageData } from './$types';
 	import { UsersController } from '../../shared/UsersController';
+	import Logout from '../auth/Logout.svelte';
 
 	export let data: PageData;
 	remult.user = { id: data.userId };
 
-	const calllll = async () => {
-		const tt = await UsersController.getAllUsers();
+	let users = {};
+	const getAllUsers = async () => {
+		users = await UsersController.getAllUsers();
 		await UsersController.getAllUsers();
 		await UsersController.getAllUsers();
-		await UsersController.getAllUsers();
-		await UsersController.getAllUsers();
-		console.log(`tt`, tt);
 	};
 </script>
 
+<p>You are in the <b>private</b> space.</p>
 <h2>Authenticated</h2>
 <p>User id: {data.userId} {remult.user?.id}</p>
 <p>Email: {data.email}</p>
-<form method="post" action="?/logout" use:enhance>
-	<input type="submit" value="Sign out" />
-</form>
 
-<button on:click={calllll}>sdsd</button>
+<Logout />
+
+<hr />
+
+<button on:click={getAllUsers}>GetAllUsers</button>
+<pre>{JSON.stringify(users, null, 2)}</pre>

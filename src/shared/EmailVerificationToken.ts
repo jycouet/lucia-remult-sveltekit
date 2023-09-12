@@ -1,7 +1,8 @@
 import { Entity, Fields } from 'remult';
 
 @Entity('emailVerificationTokens', {
-	dbName: 'email_verification_token'
+	dbName: 'email_verification_token',
+	allowApiCrud: false
 })
 export class EmailVerificationToken {
 	@Fields.string()

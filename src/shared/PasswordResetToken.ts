@@ -1,7 +1,8 @@
 import { Entity, Fields } from 'remult';
 
 @Entity('passwordResetTokens', {
-	dbName: 'password_reset_token'
+	dbName: 'password_reset_token',
+	allowApiCrud: false
 })
 export class PasswordResetToken {
 	@Fields.string()
