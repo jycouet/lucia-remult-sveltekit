@@ -4,7 +4,7 @@ import { generatePasswordResetToken } from '$auth/server/token';
 import { fail } from '@sveltejs/kit';
 
 import { remult } from 'remult';
-import { User } from '../../../shared/User';
+import { AuthUser } from '../shared/AuthUser';
 import type { Actions } from './$types';
 
 export const actions: Actions = {
@@ -18,7 +18,7 @@ export const actions: Actions = {
 			});
 		}
 		try {
-			const repo = remult.repo(User);
+			const repo = remult.repo(AuthUser);
 			const storedUser = await repo.findFirst({ email: email });
 			if (!storedUser) {
 				return fail(400, {

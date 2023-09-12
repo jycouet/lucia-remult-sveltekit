@@ -10,7 +10,7 @@ import { UsersController } from './shared/UsersController';
 import { AuthUserKey } from '$auth/shared/AuthUserKey';
 import { AuthUserSession } from '$auth/shared/AuthUserSession';
 import { SqlDatabase, remult } from 'remult';
-import { User } from './shared/User';
+import { AuthUser } from './routes/auth/shared/AuthUser';
 
 const handleAuth: Handle = async ({ event, resolve }) => {
 	// we can pass `event` because we used the SvelteKit middleware
@@ -24,7 +24,7 @@ export const remultApi = remultSveltekit({
 	logApiEndPoints: true,
 	ensureSchema: true,
 	entities: [
-		User,
+		AuthUser,
 		AuthEmailVerificationToken,
 		AuthUserSession,
 		AuthUserKey,

@@ -1,10 +1,10 @@
 import { Entity, Fields } from 'remult';
 
-@Entity('users', {
-	dbName: 'public.user'
+@Entity('authUsers', {
+	dbName: 'auth_user'
 })
-export class User {
-	@Fields.string()
+export class AuthUser {
+	@Fields.cuid()
 	id!: string;
 
 	@Fields.string()

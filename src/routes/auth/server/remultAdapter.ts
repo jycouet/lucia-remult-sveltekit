@@ -2,7 +2,7 @@ import { AuthUserKey } from '$auth/shared/AuthUserKey';
 import { AuthUserSession } from '$auth/shared/AuthUserSession';
 import type { Adapter, InitializeAdapter, SessionSchema } from 'lucia';
 import { remult } from 'remult';
-import { User } from '../../../shared/User';
+import { AuthUser } from '../shared/AuthUser';
 
 type PossibleRemultError = {
 	code: string;
@@ -11,7 +11,7 @@ type PossibleRemultError = {
 
 // TODO provide repos from the outside?
 export const remultAdapter = (): InitializeAdapter<Adapter> => {
-	const repo_User = remult.repo(User);
+	const repo_User = remult.repo(AuthUser);
 	const repo_Session = remult.repo(AuthUserSession);
 	const repo_UserKey = remult.repo(AuthUserKey);
 
