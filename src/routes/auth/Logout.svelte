@@ -1,7 +1,7 @@
 <script>
 	import { enhance } from '$app/forms';
 	import { goto } from '$app/navigation';
-	import { AUTH_ROUTES } from './AUTH_ROUTES';
+	import { AUTH_ROUTES } from '$auth/AUTH_ROUTES';
 </script>
 
 <form

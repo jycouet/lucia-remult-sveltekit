@@ -1,7 +1,7 @@
 import { generateRandomString, isWithinExpiration } from 'lucia/utils';
 import { remult } from 'remult';
-import { EmailVerificationToken } from '../../shared/EmailVerificationToken.js';
-import { PasswordResetToken } from '../../shared/PasswordResetToken.js';
+import { EmailVerificationToken } from '$auth/shared/EmailVerificationToken.js';
+import { PasswordResetToken } from '$auth/shared/PasswordResetToken.js';
 
 const EXPIRES_IN = 1000 * 60 * 60 * 2; // 2 hours
 

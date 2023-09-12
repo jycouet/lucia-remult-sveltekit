@@ -1,5 +1,5 @@
-import { auth } from '$lib/server/lucia';
-import { fail, redirect } from '@sveltejs/kit';
+import { auth } from '$auth/server/lucia';
+import { fail } from '@sveltejs/kit';
 
 import type { Actions } from './$types';
 

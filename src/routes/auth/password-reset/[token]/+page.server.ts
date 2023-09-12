@@ -1,9 +1,9 @@
-import { auth } from '$lib/server/lucia';
+import { auth } from '$auth/server/lucia';
 import { fail, redirect } from '@sveltejs/kit';
-import { isValidPasswordResetToken, validatePasswordResetToken } from '$lib/server/token';
+import { isValidPasswordResetToken, validatePasswordResetToken } from '$auth/server/token';
 
 import type { PageServerLoad, Actions } from './$types';
-import { AUTH_ROUTES } from '../../AUTH_ROUTES';
+import { AUTH_ROUTES } from '$auth/AUTH_ROUTES';
 
 export const load: PageServerLoad = async ({ params }) => {
 	const { token } = params;

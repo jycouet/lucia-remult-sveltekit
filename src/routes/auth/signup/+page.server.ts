@@ -1,10 +1,10 @@
-import { auth } from '$lib/server/lucia';
+import { auth } from '$auth/server/lucia';
 import { fail, redirect } from '@sveltejs/kit';
-import { generateEmailVerificationToken } from '$lib/server/token';
-import { isValidEmail, sendEmailVerificationLink } from '$lib/server/email';
+import { generateEmailVerificationToken } from '$auth/server/token';
+import { isValidEmail, sendEmailVerificationLink } from '$auth/server/email';
 
 import type { PageServerLoad, Actions } from './$types';
-import { AUTH_ROUTES } from '../AUTH_ROUTES';
+import { AUTH_ROUTES } from '$auth/AUTH_ROUTES';
 
 export const load: PageServerLoad = async ({ locals }) => {
 	const session = await locals.auth.validate();

@@ -22,4 +22,6 @@ pnpm dev
 <!-- TODO user_id -->
 <!-- TODO Check with prisma cadb -->
 <!-- TODO Check with another app (PWA) -->
-<!-- TODO GUIDE -->
+<!-- TODO GUIDE
+	1/ alias $auth
+-->

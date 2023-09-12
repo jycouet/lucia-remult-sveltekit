@@ -1,6 +1,6 @@
 import { redirect } from '@sveltejs/kit';
 import type { LayoutServerLoad } from './$types';
-import { AUTH_ROUTES } from '../auth/AUTH_ROUTES';
+import { AUTH_ROUTES } from '$auth/AUTH_ROUTES';
 
 export const load: LayoutServerLoad = async ({ locals, url }) => {
 	// TODO Switch to remult.user!

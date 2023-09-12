@@ -1,4 +1,4 @@
-import { AUTH_ROUTES } from '../../routes/auth/AUTH_ROUTES';
+import { AUTH_ROUTES } from '$auth/AUTH_ROUTES';
 
 export const sendEmailVerificationLink = async (token: string) => {
 	// TODO ORIGIN

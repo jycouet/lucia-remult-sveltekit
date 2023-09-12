@@ -1,6 +1,6 @@
-import { isValidEmail, sendPasswordResetLink } from '$lib/server/email';
-import { auth } from '$lib/server/lucia';
-import { generatePasswordResetToken } from '$lib/server/token';
+import { isValidEmail, sendPasswordResetLink } from '$auth/server/email';
+import { auth } from '$auth/server/lucia';
+import { generatePasswordResetToken } from '$auth/server/token';
 import { fail } from '@sveltejs/kit';
 
 import { remult } from 'remult';

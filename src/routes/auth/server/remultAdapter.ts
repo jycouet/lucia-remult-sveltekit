@@ -1,8 +1,8 @@
 import type { Adapter, InitializeAdapter, KeySchema, SessionSchema, UserSchema } from 'lucia';
 import { remult } from 'remult';
-import { User } from '../../shared/User';
-import { UserSession } from '../../shared/UserSession';
-import { UserKey } from '../../shared/UserKey';
+import { User } from '../../../shared/User';
+import { UserSession } from '$auth/shared/UserSession';
+import { UserKey } from '$auth/shared/UserKey';
 
 type PossibleRemultError = {
 	code: string;

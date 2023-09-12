@@ -1,9 +1,9 @@
-import { auth } from '$lib/server/lucia';
+import { auth } from '$auth/server/lucia';
 import { fail, redirect } from '@sveltejs/kit';
 import { LuciaError } from 'lucia';
 
 import type { Actions, PageServerLoad } from './$types';
-import { AUTH_ROUTES } from '../AUTH_ROUTES';
+import { AUTH_ROUTES } from '$auth/AUTH_ROUTES';
 
 export const load: PageServerLoad = async ({ locals }) => {
 	const session = await locals.auth.validate();

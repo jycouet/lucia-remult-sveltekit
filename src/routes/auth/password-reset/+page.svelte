@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
 	import { page } from '$app/stores';
-	import { AUTH_ROUTES } from '../AUTH_ROUTES';
+	import { AUTH_ROUTES } from '$auth/AUTH_ROUTES';
 
 	import type { ActionData } from './$types';
 

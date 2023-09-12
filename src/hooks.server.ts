@@ -1,16 +1,16 @@
-import { auth } from '$lib/server/lucia';
+import { auth } from '$auth/server/lucia';
+import { PasswordResetToken } from '$auth/shared/PasswordResetToken';
 import type { Handle } from '@sveltejs/kit';
 import { sequence } from '@sveltejs/kit/hooks';
 import { createPostgresConnection } from 'remult/postgres';
 import { remultSveltekit } from 'remult/remult-sveltekit';
-import { EmailVerificationToken } from './shared/EmailVerificationToken';
-import { PasswordResetToken } from './shared/PasswordResetToken';
+import { EmailVerificationToken } from './routes/auth/shared/EmailVerificationToken';
 import { UsersController } from './shared/UsersController';
 
-import { User } from './shared/User';
-import { UserKey } from './shared/UserKey';
-import { UserSession } from './shared/UserSession';
+import { UserKey } from '$auth/shared/UserKey';
+import { UserSession } from '$auth/shared/UserSession';
 import { SqlDatabase, remult } from 'remult';
+import { User } from './shared/User';
 
 const handleAuth: Handle = async ({ event, resolve }) => {
 	// we can pass `event` because we used the SvelteKit middleware
