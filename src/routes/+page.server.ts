@@ -5,7 +5,6 @@ import type { PageServerLoad, Actions } from './$types';
 import { remult } from 'remult';
 
 export const load: PageServerLoad = async ({ locals }) => {
-	console.log(`load`, remult.user);
 	// TODO Switch to remult.user!
 	const session = await locals.auth.validate();
 	if (!session) throw redirect(302, '/login');

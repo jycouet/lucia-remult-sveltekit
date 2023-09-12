@@ -1,6 +1,6 @@
 # Email & password example with Lucia and SvelteKit
 
-This example uses SQLite3 with `better-sqlite3`.
+This example uses SQLite3 with `remult`.
 
 ```bash
 # install dependencies
@@ -10,7 +10,7 @@ pnpm i
 pnpm dev
 ```
 
-## User schema
+## User schema # TODO
 
 | id               | type                    | unique |
 | ---------------- | ----------------------- | :----: |

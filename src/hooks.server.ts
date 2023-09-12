@@ -27,22 +27,11 @@ export const remultApi = remultSveltekit({
 	controllers: [UsersController],
 	initRequest: async (request, options) => {
 		const session = await request.locals.auth.validate();
-		// console.log(`session`, session);
-		console.log(`initRequest`, session?.user.email);
-
 		if (session?.user) {
 			remult.user = { id: session?.user.userId, name: session?.user.email };
 		} else {
 			remult.user = undefined;
 		}
-
-		// const session = await auth.validate();
-		// const tmp = request.cookies.get('auth_session');
-		// console.log(`tmp`, tmp);
-		// const s = await auth.getSession(tmp!);
-		// console.log(`s`, s);
-		// const toto = auth.handleRequest(request);
-		// console.log(`toto`, toto);
 	},
 	dataProvider: createPostgresConnection({
 		connectionString: 'postgres://postgres:example@127.0.0.1:5433/lucia-demo'
