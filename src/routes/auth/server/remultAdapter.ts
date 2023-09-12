@@ -1,44 +1,16 @@
-import type { Adapter, InitializeAdapter, KeySchema, SessionSchema, UserSchema } from 'lucia';
+import { UserKey } from '$auth/shared/UserKey';
+import { UserSession } from '$auth/shared/UserSession';
+import type { Adapter, InitializeAdapter, SessionSchema } from 'lucia';
 import { remult } from 'remult';
 import { User } from '../../../shared/User';
-import { UserSession } from '$auth/shared/UserSession';
-import { UserKey } from '$auth/shared/UserKey';
 
 type PossibleRemultError = {
 	code: string;
 	message: string;
 };
 
-// type ExtractModelNames<_PrismaClient extends PrismaClient> = Exclude<
-// 	keyof _PrismaClient,
-// 	`$${string}`
-// >;
-
-export const remultAdapter = <_PrismaClient extends PrismaClient>(): // client: _PrismaClient
-// modelNames?: {
-// 	user: ExtractModelNames<_PrismaClient>;
-// 	session: ExtractModelNames<_PrismaClient> | null;
-// 	key: ExtractModelNames<_PrismaClient>;
-// }
-InitializeAdapter<Adapter> => {
-	// const getModels = () => {
-	// 	if (!modelNames) {
-	// 		return {
-	// 			User: client['user'] as SmartPrismaModel<UserSchema>,
-	// 			Session: (client['session'] as SmartPrismaModel<SessionSchema>) ?? null,
-	// 			Key: client['key'] as SmartPrismaModel<KeySchema>
-	// 		};
-	// 	}
-	// 	return {
-	// 		User: client[modelNames.user] as SmartPrismaModel<UserSchema>,
-	// 		Session: modelNames.session
-	// 			? (client[modelNames.session] as SmartPrismaModel<SessionSchema>)
-	// 			: null,
-	// 		Key: client[modelNames.key] as SmartPrismaModel<KeySchema>
-	// 	};
-	// };
-	// const { User, Session, Key } = getModels();
-
+// TODO provide repos from the outside?
+export const remultAdapter = (): InitializeAdapter<Adapter> => {
 	const repo_User = remult.repo(User);
 	const repo_Session = remult.repo(UserSession);
 	const repo_UserKey = remult.repo(UserKey);
@@ -86,6 +58,7 @@ InitializeAdapter<Adapter> => {
 						id: userId
 					});
 				} catch (e) {
+					// TODO
 					const error = e as Partial<PossibleRemultError>;
 					if (error.code === 'P2025') {
 						// user does not exist
@@ -98,33 +71,25 @@ InitializeAdapter<Adapter> => {
 				await repo_User.update(userId, partialUser);
 			},
 			getSession: async (sessionId) => {
-				// if (!Session) {
-				// 	throw new Error('Session table not defined');
-				// }
 				const result = await repo_Session.findFirst({
 					id: sessionId
 				});
 				if (!result) return null;
-				return transformPrismaSession(result);
+				return transformSession(result);
 			},
 			getSessionsByUserId: async (userId) => {
-				// if (!Session) {
-				// 	throw new Error('Session table not defined');
-				// }
 				const sessions = await repo_Session.find({
 					where: {
 						user_id: userId
 					}
 				});
-				return sessions.map((session) => transformPrismaSession(session));
+				return sessions.map((session) => transformSession(session));
 			},
 			setSession: async (session) => {
-				// if (!Session) {
-				// 	throw new Error('Session table not defined');
-				// }
 				try {
 					await repo_Session.insert(session);
 				} catch (e) {
+					// TODO
 					const error = e as Partial<PossibleRemultError>;
 					if (error.code === 'P2003') {
 						throw new LuciaError('AUTH_INVALID_USER_ID');
@@ -134,12 +99,10 @@ InitializeAdapter<Adapter> => {
 				}
 			},
 			deleteSession: async (sessionId) => {
-				// if (!Session) {
-				// 	throw new Error('Session table not defined');
-				// }
 				try {
 					await repo_Session.delete(sessionId);
 				} catch (e) {
+					// TODO
 					const error = e as Partial<PossibleRemultError>;
 					if (error.code === 'P2025') {
 						// session does not exist
@@ -149,18 +112,12 @@ InitializeAdapter<Adapter> => {
 				}
 			},
 			deleteSessionsByUserId: async (userId) => {
-				// if (!Session) {
-				// 	throw new Error('Session table not defined');
-				// }
 				const all = await repo_Session.find({ where: { user_id: userId } });
 				for (const session of all) {
 					await repo_Session.delete(session.id);
 				}
 			},
 			updateSession: async (userId, partialSession) => {
-				// if (!Session) {
-				// 	throw new Error('Session table not defined');
-				// }
 				await repo_Session.update(userId, partialSession);
 			},
 
@@ -185,6 +142,7 @@ InitializeAdapter<Adapter> => {
 						hashed_password: key.hashed_password!
 					});
 				} catch (e) {
+					// TODO
 					const error = e as Partial<PossibleRemultError>;
 					if (error.code === 'P2003') {
 						throw new LuciaError('AUTH_INVALID_USER_ID');
@@ -199,6 +157,7 @@ InitializeAdapter<Adapter> => {
 				try {
 					await repo_UserKey.delete(keyId);
 				} catch (e) {
+					// TODO
 					const error = e as Partial<PossibleRemultError>;
 					if (error.code === 'P2025') {
 						// key does not exist
@@ -224,7 +183,7 @@ InitializeAdapter<Adapter> => {
 	};
 };
 
-export const transformPrismaSession = (sessionData: UserSession): SessionSchema => {
+export const transformSession = (sessionData: UserSession): SessionSchema => {
 	const { active_expires, idle_expires, ...data } = sessionData;
 	// TODO
 	// @ts-ignore
@@ -235,23 +194,7 @@ export const transformPrismaSession = (sessionData: UserSession): SessionSchema 
 	};
 };
 
-type PrismaClient = {
-	$transaction: (...args: any) => any;
-} & { [K: string]: any };
-
 export type RemultSession = Omit<SessionSchema, 'active_expires' | 'idle_expires'> & {
 	active_expires: BigInt | number;
 	idle_expires: BigInt | number;
-};
-
-export type SmartPrismaModel<_Schema = any> = {
-	findUnique: <_Included = {}>(options: {
-		where: Partial<_Schema>;
-		include?: Partial<Record<string, boolean>>;
-	}) => Promise<null | _Schema> & _Included;
-	findMany: (options?: { where: Partial<_Schema> }) => Promise<_Schema[]>;
-	create: (options: { data: _Schema }) => Promise<_Schema>;
-	delete: (options: { where: Partial<_Schema> }) => Promise<void>;
-	deleteMany: (options?: { where: Partial<_Schema> }) => Promise<void>;
-	update: (options: { data: Partial<_Schema>; where: Partial<_Schema> }) => Promise<_Schema>;
 };
