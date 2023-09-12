@@ -1,19 +1,19 @@
 import { Entity, Fields } from 'remult';
 
 @Entity('userSessions', {
-	dbName: 'user_session',
+	dbName: 'auth_user_session',
 	allowApiCrud: false
 })
-export class UserSession {
+export class AuthUserSession {
 	@Fields.string()
 	id!: string;
 
 	@Fields.string()
 	user_id!: string;
 
-	@Fields.integer()
+	@Fields.number()
 	active_expires!: number;
 
-	@Fields.integer()
+	@Fields.number()
 	idle_expires!: number;
 }

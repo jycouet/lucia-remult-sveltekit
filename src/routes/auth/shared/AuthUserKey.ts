@@ -1,16 +1,16 @@
 import { Entity, Fields } from 'remult';
 
-@Entity('userKeys', {
-	dbName: 'user_key',
+@Entity('authUserKeys', {
+	dbName: 'auth_user_key',
 	allowApiCrud: false
 })
-export class UserKey {
+export class AuthUserKey {
 	@Fields.string()
 	id!: string;
 
 	@Fields.string()
 	user_id!: string;
 
-	@Fields.string({ allowNull: true })
+	@Fields.string()
 	hashed_password!: string;
 }

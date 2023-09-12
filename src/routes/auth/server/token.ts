@@ -1,12 +1,12 @@
 import { generateRandomString, isWithinExpiration } from 'lucia/utils';
 import { remult } from 'remult';
-import { EmailVerificationToken } from '$auth/shared/EmailVerificationToken.js';
-import { PasswordResetToken } from '$auth/shared/PasswordResetToken.js';
+import { AuthEmailVerificationToken } from '$auth/shared/AuthEmailVerificationToken.js';
+import { AuthPasswordResetToken } from '$auth/shared/AuthPasswordResetToken.js';
 
 const EXPIRES_IN = 1000 * 60 * 60 * 2; // 2 hours
 
 export const generateEmailVerificationToken = async (userId: string) => {
-	const repo = remult.repo(EmailVerificationToken);
+	const repo = remult.repo(AuthEmailVerificationToken);
 	const storedUserTokens = await repo.find({ where: { user_id: userId } });
 	if (storedUserTokens.length > 0) {
 		const reusableStoredToken = storedUserTokens.find((token) => {
@@ -26,7 +26,7 @@ export const generateEmailVerificationToken = async (userId: string) => {
 };
 
 export const validateEmailVerificationToken = async (token: string) => {
-	const repo = remult.repo(EmailVerificationToken);
+	const repo = remult.repo(AuthEmailVerificationToken);
 
 	const storedToken = await repo.findFirst({ id: token });
 	if (!storedToken) {
@@ -42,7 +42,7 @@ export const validateEmailVerificationToken = async (token: string) => {
 };
 
 export const generatePasswordResetToken = async (userId: string) => {
-	const repo = remult.repo(PasswordResetToken);
+	const repo = remult.repo(AuthPasswordResetToken);
 	const storedUserTokens = await repo.find({ where: { user_id: userId } });
 	if (storedUserTokens.length > 0) {
 		const reusableStoredToken = storedUserTokens.find((token: any) => {
@@ -62,7 +62,7 @@ export const generatePasswordResetToken = async (userId: string) => {
 };
 
 export const validatePasswordResetToken = async (token: string) => {
-	const repo = remult.repo(PasswordResetToken);
+	const repo = remult.repo(AuthPasswordResetToken);
 
 	const storedToken = await repo.findFirst({ id: token });
 	if (!storedToken) {
@@ -77,7 +77,7 @@ export const validatePasswordResetToken = async (token: string) => {
 };
 
 export const isValidPasswordResetToken = async (token: string) => {
-	const repo = remult.repo(PasswordResetToken);
+	const repo = remult.repo(AuthPasswordResetToken);
 	const storedToken = await repo.findFirst({ id: token });
 	if (!storedToken) return false;
 	const tokenExpires = Number(storedToken.expires); // bigint => number conversion

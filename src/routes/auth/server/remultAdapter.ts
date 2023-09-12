@@ -1,5 +1,5 @@
-import { UserKey } from '$auth/shared/UserKey';
-import { UserSession } from '$auth/shared/UserSession';
+import { AuthUserKey } from '$auth/shared/AuthUserKey';
+import { AuthUserSession } from '$auth/shared/AuthUserSession';
 import type { Adapter, InitializeAdapter, SessionSchema } from 'lucia';
 import { remult } from 'remult';
 import { User } from '../../../shared/User';
@@ -12,8 +12,8 @@ type PossibleRemultError = {
 // TODO provide repos from the outside?
 export const remultAdapter = (): InitializeAdapter<Adapter> => {
 	const repo_User = remult.repo(User);
-	const repo_Session = remult.repo(UserSession);
-	const repo_UserKey = remult.repo(UserKey);
+	const repo_Session = remult.repo(AuthUserSession);
+	const repo_UserKey = remult.repo(AuthUserKey);
 
 	return (LuciaError) => {
 		return {
@@ -183,7 +183,7 @@ export const remultAdapter = (): InitializeAdapter<Adapter> => {
 	};
 };
 
-export const transformSession = (sessionData: UserSession): SessionSchema => {
+export const transformSession = (sessionData: AuthUserSession): SessionSchema => {
 	const { active_expires, idle_expires, ...data } = sessionData;
 	// TODO
 	// @ts-ignore

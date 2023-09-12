@@ -1,16 +1,16 @@
 import { Entity, Fields } from 'remult';
 
-@Entity('passwordResetTokens', {
-	dbName: 'password_reset_token',
+@Entity('authEmailVerificationTokens', {
+	dbName: 'auth_email_verification_token',
 	allowApiCrud: false
 })
-export class PasswordResetToken {
+export class AuthEmailVerificationToken {
 	@Fields.string()
 	id!: string;
 
 	@Fields.string()
 	user_id!: string;
 
-	@Fields.integer()
+	@Fields.number()
 	expires!: number;
 }

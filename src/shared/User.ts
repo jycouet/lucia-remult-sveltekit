@@ -10,6 +10,6 @@ export class User {
 	@Fields.string()
 	email!: string;
 
-	@Fields.integer()
-	email_verified!: number;
+	@Fields.boolean()
+	email_verified!: boolean;
 }
