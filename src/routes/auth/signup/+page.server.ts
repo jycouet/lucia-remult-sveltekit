@@ -40,7 +40,7 @@ export const actions: Actions = {
 				},
 				attributes: {
 					email: email.toLowerCase(),
-					email_verified: Number(false)
+					email_verified: false
 				}
 			});
 			const session = await auth.createSession({

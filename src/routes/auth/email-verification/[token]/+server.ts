@@ -10,7 +10,7 @@ export const GET: RequestHandler = async ({ params, locals }) => {
 		const user = await auth.getUser(userId);
 		await auth.invalidateAllUserSessions(user.userId);
 		await auth.updateUserAttributes(user.userId, {
-			email_verified: Number(true)
+			email_verified: true
 		});
 		const session = await auth.createSession({
 			userId: user.userId,

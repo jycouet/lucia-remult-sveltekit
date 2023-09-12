@@ -32,7 +32,7 @@ export const actions: Actions = {
 			await auth.updateKeyPassword('email', user.email, password);
 			if (!user.emailVerified) {
 				user = await auth.updateUserAttributes(user.userId, {
-					email_verified: Number(true)
+					email_verified: true
 				});
 			}
 			const session = await auth.createSession({
