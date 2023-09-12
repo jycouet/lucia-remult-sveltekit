@@ -12,6 +12,6 @@ pnpm dev
 
 Check schema.sql
 
-<!-- TODO GUIDE
-	1/ alias $auth
--->
+## To be done
+
+    1/ alias $auth

@@ -9,7 +9,6 @@ type PossibleRemultError = {
 	message: string;
 };
 
-// TODO provide repos from the outside?
 export const remultAdapter = (): InitializeAdapter<Adapter> => {
 	const repo_User = remult.repo(AuthUser);
 	const repo_Session = remult.repo(AuthUserSession);
