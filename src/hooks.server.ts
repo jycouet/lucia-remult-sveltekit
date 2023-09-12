@@ -11,6 +11,7 @@ import { AuthUserKey } from '$auth/shared/AuthUserKey';
 import { AuthUserSession } from '$auth/shared/AuthUserSession';
 import { SqlDatabase, remult } from 'remult';
 import { AuthUser } from './routes/auth/shared/AuthUser';
+import { RemultMigration, migrationUp } from './shared/RemultMigration';
 
 const handleAuth: Handle = async ({ event, resolve }) => {
 	// we can pass `event` because we used the SvelteKit middleware
@@ -18,23 +19,22 @@ const handleAuth: Handle = async ({ event, resolve }) => {
 	return await resolve(event);
 };
 
-// SqlDatabase.LogToConsole = 'oneLiner';
+SqlDatabase.LogToConsole = 'oneLiner';
 
 export const remultApi = remultSveltekit({
-	logApiEndPoints: true,
-	ensureSchema: true,
+	logApiEndPoints: false,
+	ensureSchema: false,
 	entities: [
 		AuthUser,
 		AuthEmailVerificationToken,
 		AuthUserSession,
 		AuthUserKey,
-		AuthPasswordResetToken
+		AuthPasswordResetToken,
+		RemultMigration
 	],
 	controllers: [UsersController],
 	initRequest: async (request, options) => {
 		const session = await request.locals.auth.validate();
-
-		console.log(`session`, session);
 
 		if (session?.user) {
 			remult.user = {
@@ -51,7 +51,10 @@ export const remultApi = remultSveltekit({
 	dataProvider: createPostgresConnection({
 		connectionString: 'postgres://postgres:example@127.0.0.1:5433/lucia-demo'
 		// connectionString: 'postgres://postgres:example@127.0.0.1:5433/my-minion-cadb'
-	})
+	}),
+	initApi(remult) {
+		migrationUp();
+	}
 });
 
 export const handle = sequence(
